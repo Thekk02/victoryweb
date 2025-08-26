@@ -1,0 +1,34 @@
+export default [
+    {
+        path:'/AppMain',
+        name:'AppMain',
+        component:()=>import('@/views/AppMain.vue'),
+        redirect: { name: "Home" },
+        children:[
+            {
+                path:'home',
+                name:'Home',
+                meta:{
+                    title:'首页'
+                },
+                component:()=>import('@/views/Home.vue')
+            },
+            /*{
+                path:'/Admin',
+                name:'admin',
+                meta:{
+                    title:'管理员管理'
+                },
+                component:()=>import('../components/admin/AdminManage.vue')
+            },
+            {
+                path:'/User',
+                name:'user',
+                meta:{
+                    title:'用户管理'
+                },
+                component:()=>import('../components/user/UserManage.vue')
+            },*/
+        ]
+    }
+]
