@@ -50,7 +50,7 @@
                 </el-icon>
                 <div>
                     <p>资料数量</p>
-                    <span>6</span>
+                    <span>8</span>
                 </div>
             </div>
         </el-col>

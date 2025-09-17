@@ -1,24 +1,24 @@
 <script>
-import {getFileByname, getInspectionInstruction} from "@/apis/api";
-import GlobalVariable from "@/module/GlobalVariables";
+import {getValidDiagram,getFileByname} from "@/apis/api"
 import { ElMessageBox } from 'element-plus';
+import request from '@/utils/request'
 
 export default ({
-  name:"InspectionInstructionPage",
+  name:"ValidDiagram",
   computed:{},
   setup(){},
   data(){
     return {
-      InspectionInstruction:{
-        name: ''
+      ValidDiagram:{
+        name: '',
       },
+      //返回的结果列表
       list:[],
+      //选中的行数据
       selectRow: {
         name: '',
         type: '',
-        location: '',
-        time: '',
-
+        location: ''
       }
 
     }
@@ -26,17 +26,18 @@ export default ({
   components: {},
   methods:{
     inqueryhandler(){
-      if(this.InspectionInstruction.name.length < 5){
-        ElMessageBox.alert('输入检验指导书名称太短，请重新输入！！！', '查询条件错误', {
 
-        })
+      if(this.ValidDiagram.name.length < 5){
+        ElMessageBox.alert('输入客户原图名称太短，请重新输入！！！', '查询条件错误')
       }else{
-        getInspectionInstruction(this.InspectionInstruction.name).then((resp) =>{
-          if(resp.data.data.length === null || resp.data.data.length === 0){
-            ElMessageBox.alert('所查图纸不存在或正在检出变更', '未找到图纸')
-          }else{
-            this.list = resp.data.data
-          }}
+        getValidDiagram(this.ValidDiagram.name).then((resp) =>{
+              console.log(resp.data.data)
+              if(resp.data.data.length === null || resp.data.data.length === 0){
+                ElMessageBox.alert('所查图纸不存在或正在检出变更', '未找到图纸')
+              }else{
+                this.list = resp.data.data
+              }
+            }
         )
       }
     },
@@ -52,6 +53,8 @@ export default ({
       })
 
     },
+
+
   },
 })
 </script>
@@ -61,15 +64,15 @@ export default ({
     <div class="app-layout">
       <el-container class="app-container1" style="height: 100vh">
         <el-header height="100px" style="font-size: 20px;background-color: lightskyblue;text-align: center;font-size: 70px;font-family: Helvetica;color: ivory ">
-          检验指导书
+          本批有效图
         </el-header>
         <el-container>
           <el-main class="app-main">
             <div class="app-queryparameters">
               <el-row>
-                <el-form-item label="检验指导书名称">
+                <el-form-item label="本批有效图名称">
                   <el-col :span="24">
-                    <el-input v-model="InspectionInstruction.name" placeholder="请输入检验指导书名称" @keyup.enter="inqueryhandler"></el-input>
+                    <el-input v-model="ValidDiagram.name" placeholder="请输入本批有效图名称" @keyup.enter="inqueryhandler"></el-input>
                   </el-col>
                 </el-form-item>
                 <el-form-item>
@@ -77,9 +80,6 @@ export default ({
                     搜索结果
                   </el-button>
                 </el-form-item >
-                <el-form-item>
-
-                </el-form-item>
               </el-row>
 
             </div>
@@ -89,15 +89,15 @@ export default ({
                         :cell-style="{padding:'20px 0'}"
                         :cell-class-name="tableRowClassName"
                         style="width: 100%">
-                <el-table-column prop="code" label="检验指导代号" style="width: 25%"   >
+                <el-table-column prop="name" label="本批有效图名称" style="width: 25%"   >
                 </el-table-column>
-                <el-table-column prop="name" label="检验指导书名称"  style="width: 25%">
+                <el-table-column prop="type" label="文件类型"  style="width: 25%">
                 </el-table-column>
-                <el-table-column prop="plocation" label="检验指导书地址" style="width: 25%">
+                <el-table-column prop="location" label="文件地址" style="width: 25%">
                 </el-table-column>
                 <el-table-column label="操作" style="width: 25%">
                   <template #default="scope">
-                    <el-button type="text" size="small" @click="showCheck(scope.row,'Details')">查看</el-button>
+                    <el-button type="text" size="large" @click="showCheck(scope.row,'Details')">查看</el-button>
                   </template>
                 </el-table-column>
 

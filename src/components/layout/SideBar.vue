@@ -48,14 +48,6 @@ const store = useStore();
 const route = useRoute();
 const opened = computed(() => store.getters.Slider);
 const menus = computed(() => store.getters.Menu);
-const defaultActive = computed(() => {
-  let i = route.name.indexOf("/");
-  if (i < 0) {
-    return "/" + route.name;
-  } else {
-    return "/" + route.name.slice(0, i);
-  }
-});
 </script>
 
 <style lang="scss" scoped>

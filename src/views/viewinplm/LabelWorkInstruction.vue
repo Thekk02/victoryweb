@@ -6,7 +6,7 @@
 </script>
 
 <template>
-
+  <span>敬请期待</span>
 </template>
 
 <style scoped lang="scss">
