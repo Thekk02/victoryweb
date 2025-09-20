@@ -78,6 +78,11 @@ export const getValidDiagram = (name) =>{
     return request.get('/ValidDiagram/getlistbyname?name=' + name)
 }
 
+//根据卡号获取本批有效图列表
+export const getValidDiagramByCardNumber = (cardNumber) => {
+    return request.get('/ValidDiagram/getlistbycardnumber?cardNumber=' + cardNumber)
+}
+
 
 //用户管理
 

@@ -1,5 +1,5 @@
 <script>
-import {getValidDiagram,getFileByname} from "@/apis/api"
+import {getValidDiagram,getFileByname,getValidDiagramByCardNumber} from "@/apis/api"
 import { ElMessageBox } from 'element-plus';
 import request from '@/utils/request'
 
@@ -11,6 +11,7 @@ export default ({
     return {
       ValidDiagram:{
         name: '',
+        cardnumber: '',
       },
       //返回的结果列表
       list:[],
@@ -39,6 +40,20 @@ export default ({
               }
             }
         )
+      }
+    },
+    inquerybycaardnumberhandler() {
+      if(this.ValidDiagram.cardnumber.length === 0){
+        ElMessageBox('请扫描工单号后再搜索','未扫工单')
+      }else{
+        console.log(this.ValidDiagram.cardnumber)
+        getValidDiagramByCardNumber(this.ValidDiagram.cardnumber).then((resp) =>{
+          if(resp.data.data === null || resp.data.data.length === 0){
+            ElMessageBox.alert('所查图纸不存在或正在检出变更', '未找到图纸')
+          }else{
+            this.list = resp.data.data
+          }
+        })
       }
     },
     showCheck(row){
@@ -78,6 +93,16 @@ export default ({
                 <el-form-item>
                   <el-button color="#599E5E" style="margin-left: 50px;margin-right: 50px" @click="inqueryhandler">
                     搜索结果
+                  </el-button>
+                </el-form-item >
+                <el-form-item>
+                  <el-col :span="24">
+                    <el-input v-model="ValidDiagram.cardnumber" placeholder="请扫描工单号" @keyup.enter="inquerybycaardnumberhandler"></el-input>
+                  </el-col>
+                </el-form-item>
+                <el-form-item>
+                  <el-button color="#599E5E" style="margin-left: 50px;margin-right: 50px" @click="inquerybycaardnumberhandler">
+                    工单搜索
                   </el-button>
                 </el-form-item >
               </el-row>

@@ -37,3 +37,9 @@ npm install sass-loader --save-dev
 npm install style-loader --save-dev     
 npm install echarts --save
 npm install xe-utils
+```
+
+## docker相关命令
+### 制作镜像：docker build -t victoryweb:2.0.1 . 
+### 查看镜像: docker images
+### 制作tar命令：docker save -o victoryweb-2.0.1.tar victoryweb:2.0.1

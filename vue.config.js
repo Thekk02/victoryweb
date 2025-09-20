@@ -7,7 +7,7 @@ module.exports = defineConfig({
     compress: true,
     open: true,
     host: '0.0.0.0',
-    port: 808,
+    port: 8080,
     https: false,
 
 

@@ -1,6 +1,6 @@
 <template>
   <el-sub-menu
-      :index="menu.id + ''"
+      :index="menu.id"
       v-if="menu.children.length > 0"
   >
     <template #title>
