@@ -41,13 +41,13 @@ export default new Vuex.Store({
                         icon: "Document",
                         children: [],
                     },
-                    {
-                        type: 1,
-                        id: "图纸工艺",
-                        path: "/DrawingProcess",
-                        icon: "Notebook",
-                        children: [],
-                    },
+                    // {
+                    //     type: 1,
+                    //     id: "图纸工艺",
+                    //     path: "/DrawingProcess",
+                    //     icon: "Notebook",
+                    //     children: [],
+                    // },
                     {
                         type: 1,
                         id: "检验指导书",

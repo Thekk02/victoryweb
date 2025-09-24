@@ -15,8 +15,8 @@ module.exports = defineConfig({
     proxy: { //配置跨域
       '^/api': {
         //target: 'http://192.168.73.247:8080', //填写请求的目标地址
-        //target: 'http://192.168.1.43',
-        target: 'http://localhost:8080',
+        target: 'http://192.168.1.43',
+        //target: 'http://localhost:8080',
         pathRewrite: {
           '^/api': '' //请求的时候使用这个api就可以
         },
