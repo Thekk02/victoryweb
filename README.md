@@ -40,6 +40,6 @@ npm install xe-utils
 ```
 
 ## docker相关命令
-### 制作镜像：docker build -t victoryweb:2.0.3 . 
+### 制作镜像：docker build -t victoryweb:2.0.4 . 
 ### 查看镜像: docker images
-### 制作tar命令：docker save -o victoryweb-2.0.3.tar victoryweb:2.0.3
+### 制作tar命令：docker save -o victoryweb-2.0.4.tar victoryweb:2.0.4

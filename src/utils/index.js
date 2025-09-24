@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2021-01-12 09:38:09
- * @LastEditTime: 2022-01-20 10:37:39
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \vue3-element-admin\src\utils\index.js
- */
 /**
  * @description:树形结构转一维数组
  * @param {*} nodes
@@ -112,3 +104,14 @@ export const icons = () => {
     }
     return names;
 };
+
+
+/**
+ * @description:根据文件名获取文件类型
+ * @param {*} filName
+ * @return {*}
+ */
+export function getFileType(fileName) {
+    const index = fileName.lastIndexOf('.');
+    return index !== -1 ? fileName.substring(index + 1) : '';
+}

@@ -1,7 +1,7 @@
-<script>
+  <script>
 import {getValidDiagram,getFileByname,getValidDiagramByCardNumber} from "@/apis/api"
+import {getFileType} from "@/utils";
 import { ElMessageBox } from 'element-plus';
-import request from '@/utils/request'
 
 export default ({
   name:"ValidDiagram",
@@ -26,11 +26,12 @@ export default ({
   },
   components: {},
   methods:{
-    inqueryhandler(){
 
+    inqueryhandler(){
       if(this.ValidDiagram.name.length < 5){
         ElMessageBox.alert('输入客户原图名称太短，请重新输入！！！', '查询条件错误')
       }else{
+        this.list = null
         getValidDiagram(this.ValidDiagram.name).then((resp) =>{
               console.log(resp.data.data)
               if(resp.data.data.length === null || resp.data.data.length === 0){
@@ -57,15 +58,29 @@ export default ({
       }
     },
     showCheck(row){
-      getFileByname(row.location.replaceAll("\\","/")).then(res => {
-        const binaryData = [];
-        binaryData.push(res.data);
-        //获取blob链接
-        let pdfUrl = window.URL.createObjectURL(
-            new Blob(binaryData, { type: "application/pdf" })
-        );
-        window.open(pdfUrl,"_blank","menubar=no","")
-      })
+      const filetype = getFileType(row.location)
+      if(filetype === "pdf" || filetype === "PDF" || filetype === "jpg" || filetype === "png"){
+        getFileByname(row.location.replaceAll("\\","/")).then(res => {
+          const binaryData = [];
+          binaryData.push(res.data);
+          //获取blob链接
+          let pdfUrl = window.URL.createObjectURL(
+              new Blob(binaryData, { type: "application/" + filetype })
+          );
+          window.open(pdfUrl,"_blank","menubar=no","")
+        })
+      }else{
+        getFileByname(row.location.replaceAll("\\","/")).then(res =>{
+          let blob = new Blob([res.data],{type:"application/octet-stream;"})
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          //拆分图片地址保留文件名称及格式
+          link.setAttribute('download',"download." + filetype);
+          document.body.appendChild(link);
+          link.click();
+        })
+      }
 
     },
 

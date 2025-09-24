@@ -1,7 +1,7 @@
 <script>
 
 import {getFileByname, getMaterialInstruction} from "@/apis/api";
-import GlobalVariable from "@/module/GlobalVariables";
+import {getFileType} from "@/utils";
 import { ElMessageBox } from 'element-plus';
 
 export default ({
@@ -32,6 +32,7 @@ export default ({
 
         })
       }else{
+        this.list = null
         getMaterialInstruction(this.MaterialInstruction.name).then((resp) =>{
           if(resp.data.data.length === null || resp.data.data.length === 0){
             ElMessageBox.alert('所查图纸不存在或正在检出变更', '未找到图纸')
@@ -42,15 +43,29 @@ export default ({
       }
     },
     showCheck(row){
-      getFileByname(row.location.replaceAll("\\","/")).then(res => {
-        const binaryData = [];
-        binaryData.push(res.data);
-        //获取blob链接
-        let pdfUrl = window.URL.createObjectURL(
-            new Blob(binaryData, { type: "application/pdf" })
-        );
-        window.open(pdfUrl,"_blank","menubar=no","")
-      })
+      const filetype = getFileType(row.location)
+      if(filetype === "pdf" || filetype === "PDF" || filetype === "jpg" || filetype === "png"){
+        getFileByname(row.location.replaceAll("\\","/")).then(res => {
+          const binaryData = [];
+          binaryData.push(res.data);
+          //获取blob链接
+          let pdfUrl = window.URL.createObjectURL(
+              new Blob(binaryData, { type: "application/" + filetype })
+          );
+          window.open(pdfUrl,"_blank","menubar=no","")
+        })
+      }else{
+        getFileByname(row.location.replaceAll("\\","/")).then(res =>{
+          let blob = new Blob([res.data],{type:"application/octet-stream;"})
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          //拆分图片地址保留文件名称及格式
+          link.setAttribute('download',"download." + filetype);
+          document.body.appendChild(link);
+          link.click();
+        })
+      }
 
     },
   },

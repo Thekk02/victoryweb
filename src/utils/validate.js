@@ -63,3 +63,5 @@ export const isNumber = (s) => /^\d+(\.\d+)?$/.test(s);
 
 export const isBank = (s) =>
     /^([1-9]{1)(\d{11|\d{15|\d{16|\d{17|\d{18)$/.test(s);
+
+

@@ -9,7 +9,10 @@ module.exports = defineConfig({
     host: '0.0.0.0',
     port: 8080,
     https: false,
-
+    //关闭客户端报错全屏显示
+    client:{
+        overlay: false,
+    },
 
     //以上的ip和端口是我们本机的;下面为需要跨域的
     proxy: { //配置跨域
@@ -25,7 +28,6 @@ module.exports = defineConfig({
       }
     }
   },
-
   css: {
     loaderOptions: {
       scss: {
